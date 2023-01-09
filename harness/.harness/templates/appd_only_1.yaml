@@ -1,0 +1,36 @@
+template:
+  name: appd only
+  identifier: appd_only
+  versionLabel: "1"
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - name: AppDynamics
+          identifier: AppDynamics
+          type: AppDynamics
+          spec:
+            applicationName: Prod
+            tierName: cvng
+            metricData:
+              Errors: true
+              Performance: true
+            metricDefinitions: []
+            feature: Application Monitoring
+            connectorRef: org.appdprodconnectorforautomation
+            metricPacks:
+              - identifier: Errors
+              - identifier: Performance
