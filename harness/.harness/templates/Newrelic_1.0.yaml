@@ -1,0 +1,53 @@
+template:
+  name: Newrelic
+  identifier: Newrelic
+  versionLabel: "1.0"
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: scnewrelic
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - name: newrelic
+          identifier: newrelic
+          type: NewRelic
+          spec:
+            applicationName: My Application
+            applicationId: 107019083
+            metricData:
+              Performance: true
+            newRelicMetricDefinitions:
+              - identifier: New_Relic_Metric
+                metricName: New Relic Metric
+                groupName: g1
+                nrql: SELECT count(apm.service.instance.count) FROM Metric WHERE appName LIKE 'My Application' TIMESERIES
+                responseMapping:
+                  metricValueJsonPath: $.timeSeries.[*].results.[*].count
+                  timestampJsonPath: <+input>
+                sli:
+                  enabled: true
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: THROUGHPUT
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+            feature: apm
+            connectorRef: org.newrelicinsightsconnectorforautomation
+            metricPacks:
+              - identifier: Performance
