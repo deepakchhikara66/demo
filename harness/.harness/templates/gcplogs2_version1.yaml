@@ -1,0 +1,49 @@
+template:
+  name: gcplogs2
+  identifier: gcplogs2
+  versionLabel: version1
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: qa3
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: StackdriverLog
+          identifier: gcplogs
+          name: gcplogs
+          spec:
+            connectorRef: <+input>
+            feature: Cloud Logs
+            queries:
+              - name: GCO Logs Query
+                identifier: GCO_Logs_Query
+                query: <+monitoredService.variables.query>
+                serviceInstanceIdentifier: <+input>
+                messageIdentifier: <+input>
+        - type: StackdriverLog
+          identifier: gcologs2
+          name: gcologs2
+          spec:
+            connectorRef: org.gcpconnectorforautomation
+            feature: Cloud Logs
+            queries:
+              - name: GCO Logs Query
+                identifier: GCO_Logs_Query
+                query: test
+                serviceInstanceIdentifier: logName
+                messageIdentifier: jsonPayload.timestamp
+    variables:
+      - name: query
+        type: String
+        value: resource.type="k8s_container" resource.labels.location="us-central1-c"
