@@ -1,0 +1,53 @@
+template:
+  name: template1appd
+  identifier: template1appd
+  versionLabel: "1"
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: arpit123
+    environmentRef: np1
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - name: appd
+          identifier: appd
+          type: AppDynamics
+          spec:
+            applicationName: cv-app
+            tierName: docker-tier
+            metricData:
+              Errors: true
+              Performance: true
+            metricDefinitions:
+              - identifier: appdMetric
+                metricName: appdMetric
+                completeMetricPath: <+input>
+                completeServiceInstanceMetricPath: <+input>
+                groupName: G1
+                sli:
+                  enabled: true
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: RESP_TIME
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+            feature: Application Monitoring
+            connectorRef: account.appd
+            metricPacks:
+              - identifier: Errors
+              - identifier: Performance
