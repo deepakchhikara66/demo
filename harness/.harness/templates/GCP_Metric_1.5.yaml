@@ -1,0 +1,58 @@
+template:
+  name: GCP Metric
+  identifier: GCP_Metric
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: scgcp_metrics
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: Stackdriver
+          identifier: gcp_metric
+          name: gcp metric
+          spec:
+            connectorRef: <+input>
+            feature: Cloud Metrics
+            metricDefinitions:
+              - dashboardName: ""
+                dashboardPath: ""
+                metricName: m1
+                metricTags:
+                  - m1
+                identifier: m1
+                isManualQuery: true
+                jsonMetricDefinition: <+monitoredService.variables.metricjson>
+                riskProfile:
+                  metricType: RESP_TIME
+                  category: Performance
+                  thresholdTypes:
+                    - ACT_WHEN_HIGHER
+                sli:
+                  enabled: true
+                serviceInstanceField: <+input>
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: RESP_TIME
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+    variables:
+      - name: metricjson
+        type: String
+        value: "{   \"dataSets\": [     {       \"timeSeriesQuery\": {         \"unitOverride\": \"1\",         \"timeSeriesFilter\": {           \"filter\": \"metric.type=\\\"custom.googleapis.com/user/x_mongo_prod_workflow_executions_count\\\" resource.type=\\\"global\\\"\",           \"aggregation\": {             \"perSeriesAligner\": \"ALIGN_MEAN\",             \"alignmentPeriod\": \"60s\"           }         }       }     }   ] }"
+  versionLabel: "1.5"
