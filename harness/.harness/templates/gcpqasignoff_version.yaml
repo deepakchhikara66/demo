@@ -1,0 +1,53 @@
+template:
+  name: gcp-qa-signoff
+  identifier: gcpqasignoff
+  versionLabel: version
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: gcp_service
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: Stackdriver
+          identifier: gcp
+          name: gcp
+          spec:
+            connectorRef: org.gcpconnectorforautomation
+            feature: Cloud Metrics
+            metricDefinitions:
+              - dashboardName: ""
+                dashboardPath: ""
+                metricName: m21
+                metricTags:
+                  - m
+                identifier: m21
+                isManualQuery: true
+                jsonMetricDefinitionString: <+input>
+                riskProfile:
+                  riskCategory: Performance_Other
+                  thresholdTypes:
+                    - ACT_WHEN_HIGHER
+                serviceInstanceField: resource.labels.pod_name
+                sli:
+                  enabled: true
+                analysis:
+                  riskProfile:
+                    riskCategory: Performance_Other
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+            metricPacks: []
