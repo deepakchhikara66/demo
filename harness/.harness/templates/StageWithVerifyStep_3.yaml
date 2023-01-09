@@ -1,0 +1,79 @@
+template:
+  name: StageWithVerifyStep
+  identifier: StageWithVerifyStep
+  type: Stage
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    type: Deployment
+    spec:
+      deploymentType: Kubernetes
+      service:
+        serviceRef: CD
+      environment:
+        environmentRef: <+input>
+        deployToAll: false
+        environmentInputs: <+input>
+        serviceOverrideInputs: <+input>
+        infrastructureDefinitions: <+input>
+      execution:
+        steps:
+          - step:
+              name: Rollout Deployment
+              identifier: rolloutDeployment
+              type: K8sRollingDeploy
+              timeout: 10m
+              spec:
+                skipDryRun: false
+                pruningEnabled: false
+          - step:
+              type: Verify
+              name: Verify
+              identifier: Verify
+              timeout: 2h
+              spec:
+                type: Canary
+                monitoredService:
+                  type: Default
+                  spec: {}
+                spec:
+                  sensitivity: HIGH
+                  duration: 10m
+                  deploymentTag: <+serviceConfig.artifacts.primary.tag>
+              failureStrategies:
+                - onFailure:
+                    errors:
+                      - Verification
+                    action:
+                      type: ManualIntervention
+                      spec:
+                        timeout: 2h
+                        onTimeout:
+                          action:
+                            type: StageRollback
+                - onFailure:
+                    errors:
+                      - Unknown
+                    action:
+                      type: ManualIntervention
+                      spec:
+                        timeout: 2h
+                        onTimeout:
+                          action:
+                            type: Ignore
+        rollbackSteps:
+          - step:
+              name: Rollback Rollout Deployment
+              identifier: rollbackRolloutDeployment
+              type: K8sRollingRollback
+              timeout: 10m
+              spec:
+                pruningEnabled: false
+    failureStrategies:
+      - onFailure:
+          errors:
+            - AllErrors
+          action:
+            type: StageRollback
+  versionLabel: "3"
