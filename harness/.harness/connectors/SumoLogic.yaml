@@ -1,0 +1,11 @@
+connector:
+  name: SumoLogic
+  identifier: SumoLogic
+  description: ""
+  orgIdentifier: cvng
+  projectIdentifier: Template_testing
+  type: SumoLogic
+  spec:
+    url: https://api.us2.sumologic.com/
+    accessIdRef: account.cvng_appd_secret_oFKE0pUA22
+    accessKeyRef: account.cvng_appd_secret_oFKE0pUA22
