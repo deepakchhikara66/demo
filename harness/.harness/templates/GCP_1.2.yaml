@@ -1,0 +1,32 @@
+template:
+  name: GCP
+  identifier: GCP
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: scgcp
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: StackdriverLog
+          identifier: gcp
+          name: gcp
+          spec:
+            connectorRef: <+input>
+            feature: Cloud Logs
+            queries:
+              - name: GCO Logs Query
+                query: <+input>
+                serviceInstanceIdentifier: <+input>
+                messageIdentifier: <+input>
+  versionLabel: "1.2"
