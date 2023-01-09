@@ -1,0 +1,36 @@
+template:
+  name: GCP_Metric_Template
+  identifier: GCP_Metric_Template
+  versionLabel: version1
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: gcp_logs
+    environmentRef: env1
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: StackdriverLog
+          identifier: template_gcp_logs
+          name: template_gcp_logs
+          spec:
+            connectorRef: <+input>
+            feature: Cloud Logs
+            queries:
+              - name: GCO Logs Query
+                query: <+monitoredService.variables.query>
+                serviceInstanceIdentifier: <+input>
+                messageIdentifier: <+input>
+    variables:
+      - name: query
+        type: String
+        value: resource.type="k8s_container" resource.labels.location="us-central1-c"
