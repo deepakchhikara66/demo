@@ -1,0 +1,51 @@
+template:
+  name: gco logs runtime
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: qa3
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: Stackdriver
+          identifier: metric
+          name: metric
+          spec:
+            connectorRef: <+input>
+            feature: Cloud Metrics
+            metricDefinitions:
+              - dashboardName: ""
+                dashboardPath: ""
+                metricName: test
+                metricTags:
+                  - ada
+                identifier: test
+                isManualQuery: true
+                jsonMetricDefinition: <+input>
+                riskProfile:
+                  thresholdTypes: []
+                sli:
+                  enabled: true
+                analysis:
+                  riskProfile:
+                    thresholdTypes: []
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: false
+    variables:
+      - name: query
+        type: String
+        value: resource.type="k8s_container" resource.labels.location="us-central1-c"
+  identifier: gco_logs_runtime
+  versionLabel: "1"
