@@ -1,0 +1,22 @@
+connector:
+  name: deepak
+  identifier: deepak
+  description: ""
+  orgIdentifier: cvng
+  projectIdentifier: Template_testing
+  type: Github
+  spec:
+    url: https://github.com/deepakchhikara66/demo
+    authentication:
+      type: Http
+      spec:
+        type: UsernameToken
+        spec:
+          username: deeepakchhikara
+          tokenRef: deepakchhikaragit
+    apiAccess:
+      type: Token
+      spec:
+        tokenRef: deepakchhikaragit
+    executeOnDelegate: true
+    type: Repo
