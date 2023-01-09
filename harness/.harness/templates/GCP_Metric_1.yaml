@@ -1,0 +1,61 @@
+template:
+  name: GCP Metric
+  identifier: GCP_Metric
+  versionLabel: "1"
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: scgcp_metrics
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: Stackdriver
+          identifier: gcp_metrics
+          name: gcp metrics
+          spec:
+            connectorRef: org.gcpconnectorforautomation
+            feature: Cloud Metrics
+            metricDefinitions:
+              - dashboardName: ""
+                dashboardPath: ""
+                metricName: metric1
+                metricTags:
+                  - t1
+                identifier: metric1
+                isManualQuery: true
+                jsonMetricDefinition:
+                  dataSets:
+                    - timeSeriesQuery:
+                        unitOverride: "1"
+                        timeSeriesFilter:
+                          filter: metric.type="custom.googleapis.com/user/x_mongo_prod_workflow_executions_count" resource.type="global"
+                          aggregation:
+                            perSeriesAligner: ALIGN_MEAN
+                            alignmentPeriod: 60s
+                riskProfile:
+                  metricType: RESP_TIME
+                  category: Performance
+                  thresholdTypes:
+                    - ACT_WHEN_HIGHER
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: RESP_TIME
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: false
