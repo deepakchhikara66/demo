@@ -1,0 +1,41 @@
+template:
+  name: Verify Step Template with Default Monitored Service
+  identifier: Verify_Step_Template_with_Default_Monitored_Service
+  versionLabel: "1"
+  type: Step
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    type: Verify
+    timeout: 2h
+    spec:
+      type: Rolling
+      monitoredService:
+        type: Default
+        spec: {}
+      spec:
+        sensitivity: HIGH
+        duration: 5m
+        deploymentTag: <+serviceConfig.artifacts.primary.tag>
+    failureStrategies:
+      - onFailure:
+          errors:
+            - Verification
+          action:
+            type: ManualIntervention
+            spec:
+              timeout: 2h
+              onTimeout:
+                action:
+                  type: StageRollback
+      - onFailure:
+          errors:
+            - Unknown
+          action:
+            type: ManualIntervention
+            spec:
+              timeout: 2h
+              onTimeout:
+                action:
+                  type: Ignore
