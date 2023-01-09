@@ -1,0 +1,42 @@
+template:
+  name: projVerify
+  identifier: projVerify
+  versionLabel: "1"
+  type: Step
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    type: Verify
+    timeout: <+input>
+    spec:
+      type: LoadTest
+      monitoredService:
+        type: Default
+        spec: {}
+      spec:
+        sensitivity: HIGH
+        duration: 5m
+        baseline: LAST
+        deploymentTag: <+serviceConfig.artifacts.primary.tag>
+    failureStrategies:
+      - onFailure:
+          errors:
+            - Verification
+          action:
+            type: ManualIntervention
+            spec:
+              timeout: 2h
+              onTimeout:
+                action:
+                  type: StageRollback
+      - onFailure:
+          errors:
+            - Unknown
+          action:
+            type: ManualIntervention
+            spec:
+              timeout: 2h
+              onTimeout:
+                action:
+                  type: Ignore
