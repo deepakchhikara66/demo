@@ -1,0 +1,12 @@
+connector:
+  name: ELK7
+  identifier: ELK7
+  description: ""
+  orgIdentifier: cvng
+  projectIdentifier: Template_testing
+  type: ElasticSearch
+  spec:
+    url: https://elk6.dev.harness.io/
+    passwordRef: null
+    apiKeyRef: null
+    authType: None
