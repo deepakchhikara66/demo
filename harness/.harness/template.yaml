@@ -14,6 +14,23 @@ pipeline:
           execution:
             steps:
               - step:
+                  type: ShellScript
+                  name: Shell Script_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    onDelegate: true
+                    source:
+                      type: Inline
+                      spec:
+                        script: terraform --version
+                    environmentVariables: []
+                    outputVariables: []
+                    delegateSelectors:
+                      - qa-automation-cv-chiplay
+                  timeout: 10m
+                  failureStrategies: []
+              - step:
                   type: TerraformPlan
                   name: Terraform Plan_1
                   identifier: TerraformPlan_1
