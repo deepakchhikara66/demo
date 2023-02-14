@@ -1,14 +1,12 @@
 terraform {
-    required_providers {
-      harness = {
-        source = "terraform.local/local/harness"
-        version = "0.2"
-      }
+  required_providers {
+    harness = {
+      source = "harness/harness"
     }
   }
-
+}
   provider "harness" {
-    endpoint         = "https://stress.harness.io"
+    endpoint         = "https://qa.harness.io"
     account_id       = "-k53qRQAQ1O7DBLb9ACnjQ"
-    platform_api_key = "pat.-k53qRQAQ1O7DBLb9ACnjQ.63cf8e615e84c328b98625c7.i43hPhOfsvSLO9U1AD9V"
+    platform_api_key = "pat.-k53qRQAQ1O7DBLb9ACnjQ.63eb6a8f9aae3a716967a51b.kMS1Ro6qzbZ5Jjem1ppn"
   }
