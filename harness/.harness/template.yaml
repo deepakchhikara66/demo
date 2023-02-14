@@ -47,6 +47,6 @@ pipeline:
                               connectorRef: deepak
                               branch: harness
                               folderPath: harness/slo
-                    provisionerIdentifier: slo_as_code
+                    provisionerIdentifier: SLO_AS_CODE
                   timeout: 10m
         tags: {}
