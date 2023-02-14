@@ -23,7 +23,9 @@ pipeline:
                     source:
                       type: Inline
                       spec:
-                        script: terraform --version
+                        script: |-
+                          git --version  
+                          terraform --version
                     environmentVariables: []
                     outputVariables: []
                     delegateSelectors:
