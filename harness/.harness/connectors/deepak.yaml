@@ -12,7 +12,7 @@ connector:
       spec:
         type: UsernameToken
         spec:
-          username: deeepakchhikara
+          username: deeepakchhikara66
           tokenRef: deepakchhikaragit
     apiAccess:
       type: Token
