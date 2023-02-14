@@ -30,7 +30,10 @@ pipeline:
                             folderPath: harness/slo
                       secretManagerRef: harnessSecretManager
                     provisionerIdentifier: SLO_AS_CODE
+                    delegateSelectors:
+                      - qa-automation-cv-chiplay
                   timeout: 10m
+                  failureStrategies: []
               - step:
                   type: TerraformApply
                   name: Terraform Apply_1
@@ -48,5 +51,8 @@ pipeline:
                               branch: harness
                               folderPath: harness/slo
                     provisionerIdentifier: SLO_AS_CODE
+                    delegateSelectors:
+                      - qa-automation-cv-chiplay
                   timeout: 10m
+                  failureStrategies: []
         tags: {}
