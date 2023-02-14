@@ -26,7 +26,7 @@ pipeline:
                           spec:
                             gitFetchType: Branch
                             connectorRef: deepak
-                            branch: main
+                            branch: harness
                             folderPath: harness/slo
                       secretManagerRef: harnessSecretManager
                     provisionerIdentifier: SLO_AS_CODE
@@ -45,7 +45,7 @@ pipeline:
                             spec:
                               gitFetchType: Branch
                               connectorRef: deepak
-                              branch: main
+                              branch: harness
                               folderPath: harness/slo
                     provisionerIdentifier: slo_as_code
                   timeout: 10m
