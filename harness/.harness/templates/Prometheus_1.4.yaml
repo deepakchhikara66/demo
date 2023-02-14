@@ -1,0 +1,54 @@
+template:
+  name: Prometheus
+  identifier: Prometheus
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: scprometheus
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: Prometheus
+          identifier: promo
+          name: promo
+          spec:
+            connectorRef: <+input>
+            feature: apm
+            metricDefinitions:
+              - metricName: Prometheus Metric
+                identifier: prometheus_metric
+                serviceFilter: []
+                isManualQuery: true
+                query: <+monitoredService.variables.query>
+                envFilter: []
+                additionalFilters: []
+                groupName: g1
+                sli:
+                  enabled: true
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: THROUGHPUT
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+                    serviceInstanceFieldName: <+input>
+            metricPacks: []
+    variables:
+      - name: query
+        type: String
+        value: "process_cpu_seconds_total\t{  \t\tjob=\"kubernetes-nodes\", \t\tinstance=\"gke-cv-demo-default-pool-ba07a05c-o17n\"  }"
+  versionLabel: "1.4"

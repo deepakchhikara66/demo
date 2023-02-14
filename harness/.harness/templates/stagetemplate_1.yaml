@@ -1,0 +1,63 @@
+template:
+  name: stagetemplate
+  identifier: stagetemplate
+  versionLabel: "1"
+  type: Stage
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    type: Deployment
+    spec:
+      serviceConfig:
+        serviceRef: <+input>
+        serviceDefinition:
+          spec:
+            variables: []
+          type: Kubernetes
+      infrastructure:
+        environmentRef: np1
+        infrastructureDefinition:
+          type: KubernetesDirect
+          spec:
+            connectorRef: <+input>
+            namespace: <+input>
+            releaseName: release-<+INFRA_KEY>
+        allowSimultaneousDeployments: false
+      execution:
+        steps:
+          - step:
+              name: Rollout Deployment
+              identifier: rolloutDeployment
+              type: K8sRollingDeploy
+              timeout: 10m
+              spec:
+                skipDryRun: false
+                pruningEnabled: false
+          - step:
+              name: verify
+              identifier: verify
+              template:
+                templateRef: account.steptemplate
+                versionLabel: "1"
+                templateInputs:
+                  type: Verify
+                  spec:
+                    type: Rolling
+                    spec:
+                      sensitivity: <+input>
+                      duration: <+input>
+        rollbackSteps:
+          - step:
+              name: Rollback Rollout Deployment
+              identifier: rollbackRolloutDeployment
+              type: K8sRollingRollback
+              timeout: 10m
+              spec:
+                pruningEnabled: false
+    failureStrategies:
+      - onFailure:
+          errors:
+            - AllErrors
+          action:
+            type: StageRollback

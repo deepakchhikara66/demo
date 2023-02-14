@@ -1,0 +1,53 @@
+template:
+  name: appd-new-11-10
+  identifier: appdnew1110
+  versionLabel: v1
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - name: appd1
+          identifier: appd1
+          type: AppDynamics
+          spec:
+            applicationName: <+input>
+            tierName: <+input>
+            metricData:
+              Errors: true
+              Performance: true
+            metricDefinitions:
+              - identifier: appdMetric
+                metricName: appdMetric
+                completeMetricPath: <+input>
+                groupName: g1
+                completeServiceInstanceMetricPath: <+input>
+                sli:
+                  enabled: false
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: RESP_TIME
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: true
+            feature: Application Monitoring
+            connectorRef: org.appdprodconnectorforautomation
+            metricPacks:
+              - identifier: Errors
+              - identifier: Performance

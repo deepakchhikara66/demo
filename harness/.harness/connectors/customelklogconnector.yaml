@@ -1,0 +1,15 @@
+connector:
+  name: custom-elk-log-connector
+  identifier: customelklogconnector
+  orgIdentifier: cvng
+  projectIdentifier: Template_testing
+  type: CustomHealth
+  spec:
+    baseURL: http://elk6.dev.harness.io:9200/
+    headers:
+    - key: Content-Type
+      encryptedValueRef: null
+      value: application/json
+      valueEncrypted: false
+    method: GET
+    validationPath: '*/_search/'

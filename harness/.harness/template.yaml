@@ -1,0 +1,52 @@
+pipeline:
+  name: template
+  identifier: template
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  stages:
+    - stage:
+        name: SLO_AS_CODE
+        identifier: SLO_AS_CODE
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: TerraformPlan
+                  name: Terraform Plan_1
+                  identifier: TerraformPlan_1
+                  spec:
+                    configuration:
+                      command: Apply
+                      configFiles:
+                        store:
+                          type: Github
+                          spec:
+                            gitFetchType: Branch
+                            connectorRef: deepak
+                            branch: main
+                            folderPath: harness/slo
+                      secretManagerRef: harnessSecretManager
+                    provisionerIdentifier: SLO_AS_CODE
+                  timeout: 10m
+              - step:
+                  type: TerraformApply
+                  name: Terraform Apply_1
+                  identifier: TerraformApply_1
+                  spec:
+                    configuration:
+                      type: Inline
+                      spec:
+                        configFiles:
+                          store:
+                            type: Github
+                            spec:
+                              gitFetchType: Branch
+                              connectorRef: deepak
+                              branch: main
+                              folderPath: harness/slo
+                    provisionerIdentifier: slo_as_code
+                  timeout: 10m
+        tags: {}

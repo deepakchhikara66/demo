@@ -1,0 +1,33 @@
+template:
+  name: datadog-logs
+  identifier: datadoglogs
+  versionLabel: version1
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: service6
+    environmentRef: env6
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: DatadogLog
+          identifier: dd
+          name: dd
+          spec:
+            connectorRef: <+input>
+            feature: Datadog Cloud Logs
+            queries:
+              - query: <+input>
+                name: Datadog Logs Query
+                identifier: Datadog_Logs_Query
+                serviceInstanceIdentifier: <+input>
+                indexes: <+input>

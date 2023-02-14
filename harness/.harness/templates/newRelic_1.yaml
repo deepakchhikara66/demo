@@ -1,0 +1,58 @@
+template:
+  name: newRelic
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - name: NewRelic
+          identifier: NewRelic
+          type: NewRelic
+          spec:
+            applicationName: My Application
+            applicationId: 107019083
+            metricData:
+              Performance: true
+            newRelicMetricDefinitions:
+              - identifier: New_Relic_Metric
+                metricName: New Relic Metric
+                groupName: Group 1
+                nrql: <+input>
+                responseMapping:
+                  metricValueJsonPath: <+input>
+                  timestampJsonPath: <+input>
+                sli:
+                  enabled: true
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: APDEX
+                    thresholdTypes:
+                      - ACT_WHEN_LOWER
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+            feature: apm
+            connectorRef: org.newrelicinsightsconnectorforautomation
+            metricPacks:
+              - identifier: Performance
+    variables:
+      - name: query
+        type: String
+        value: resource.type="k8s_container" resource.labels.location="us-central1-c"
+  identifier: newRelic
+  versionLabel: "1"

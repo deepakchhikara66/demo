@@ -1,0 +1,34 @@
+template:
+  name: dd logs
+  identifier: dd_logs
+  versionLabel: "1"
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: DatadogLog
+          identifier: dd_logs
+          name: dd logs
+          spec:
+            connectorRef: org.datadognewconnectorforautomation
+            feature: Datadog Cloud Logs
+            queries:
+              - query: service:todolist*
+                name: Datadog Logs Query
+                identifier: Datadog_Logs_Query
+                serviceInstanceIdentifier: kube_namespace
+                indexes:
+                  - main

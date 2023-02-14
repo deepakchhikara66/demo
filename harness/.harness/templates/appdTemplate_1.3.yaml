@@ -1,0 +1,70 @@
+template:
+  name: appdTemplate
+  identifier: appdTemplate
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: qa
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - name: appd
+          identifier: appd
+          type: AppDynamics
+          spec:
+            applicationName: <+input>
+            tierName: <+input>
+            metricData:
+              Errors: true
+              Performance: true
+            metricDefinitions:
+              - identifier: appdMetric
+                metricName: appdMetric
+                baseFolder: ""
+                metricPath: ""
+                completeMetricPath: <+input>
+                groupName: g1
+                sli:
+                  enabled: true
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: THROUGHPUT
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+                    serviceInstanceMetricPath: <+input>
+            feature: Application Monitoring
+            connectorRef: <+input>
+            metricPacks:
+              - identifier: Errors
+              - identifier: Performance
+        - name: dada
+          identifier: dada
+          type: AppDynamics
+          spec:
+            applicationName: cv-app
+            tierName: docker-tier
+            metricData:
+              Errors: true
+              Performance: true
+            metricDefinitions: []
+            feature: Application Monitoring
+            connectorRef: account.appd
+            metricPacks:
+              - identifier: Errors
+              - identifier: Performance
+  versionLabel: "1.3"

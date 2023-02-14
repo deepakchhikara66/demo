@@ -1,0 +1,80 @@
+template:
+  name: GCP Metric
+  identifier: GCP_Metric
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: scgcp_metrics
+    environmentRef: <+input>
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - type: Stackdriver
+          identifier: gcp_metrics
+          name: gcp metrics
+          spec:
+            connectorRef: org.gcpconnectorforautomation
+            feature: Cloud Metrics
+            metricDefinitions:
+              - dashboardName: ""
+                dashboardPath: ""
+                metricName: metric1
+                metricTags:
+                  - t1
+                identifier: metric1
+                isManualQuery: true
+                jsonMetricDefinition: <+input>
+                riskProfile:
+                  metricType: RESP_TIME
+                  category: Performance
+                  thresholdTypes:
+                    - ACT_WHEN_HIGHER
+                sli:
+                  enabled: true
+                serviceInstanceField: <+input>
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: RESP_TIME
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+              - dashboardName: Prod-1 Runtime Workflow Related Mongo Metrics
+                dashboardPath: projects/778566137835/dashboards/026f87a1-9b32-4217-925a-03031769dddc
+                metricName: custom.googleapis.com/user/x_mongo_prod_workflow_executions_count
+                metricTags:
+                  - Workflow Executions Count
+                identifier: custom.googleapis.com/user/x_mongo_prod_workflow_executions_count
+                isManualQuery: false
+                jsonMetricDefinition: <+input>
+                riskProfile:
+                  metricType: RESP_TIME
+                  category: Performance
+                  thresholdTypes:
+                    - ACT_WHEN_HIGHER
+                sli:
+                  enabled: true
+                serviceInstanceField: <+input>
+                analysis:
+                  riskProfile:
+                    category: Performance
+                    metricType: RESP_TIME
+                    thresholdTypes:
+                      - ACT_WHEN_HIGHER
+                  liveMonitoring:
+                    enabled: true
+                  deploymentVerification:
+                    enabled: true
+  versionLabel: "1.3"

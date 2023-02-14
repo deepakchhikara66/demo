@@ -1,0 +1,51 @@
+template:
+  name: appdTemplate
+  identifier: appdTemplate
+  type: MonitoredService
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: qa
+    type: Application
+    sources:
+      changeSources:
+        - name: Harness CD Next Gen
+          identifier: harness_cd_next_gen
+          type: HarnessCDNextGen
+          enabled: true
+          category: Deployment
+          spec: {}
+      healthSources:
+        - name: appd
+          identifier: appd
+          type: AppDynamics
+          spec:
+            applicationName: QA
+            tierName: <+input>
+            metricData:
+              Errors: true
+              Performance: true
+            metricDefinitions:
+              - identifier: appdMetric
+                metricName: appdMetric
+                baseFolder: ""
+                metricPath: ""
+                completeMetricPath: <+input>
+                groupName: g1
+                sli:
+                  enabled: true
+                analysis:
+                  riskProfile: {}
+                  liveMonitoring:
+                    enabled: false
+                  deploymentVerification:
+                    enabled: false
+                    serviceInstanceMetricPath: <+input>
+            feature: Application Monitoring
+            connectorRef: org.appdprodconnectorforautomation
+            metricPacks:
+              - identifier: Errors
+              - identifier: Performance
+  versionLabel: "1.2"

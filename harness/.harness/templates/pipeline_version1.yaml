@@ -1,0 +1,103 @@
+template:
+  name: pipeline
+  identifier: pipeline
+  versionLabel: version1
+  type: Pipeline
+  projectIdentifier: Template_testing
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    stages:
+      - stage:
+          name: s1
+          identifier: s1
+          description: ""
+          type: Deployment
+          spec:
+            serviceConfig:
+              serviceRef: <+input>
+              serviceDefinition:
+                spec:
+                  variables: []
+                type: Kubernetes
+            infrastructure:
+              environmentRef: <+input>
+              infrastructureDefinition:
+                type: KubernetesDirect
+                spec:
+                  connectorRef: <+input>
+                  namespace: <+input>
+                  releaseName: release-<+INFRA_KEY>
+              allowSimultaneousDeployments: false
+            execution:
+              steps:
+                - step:
+                    name: Rollout Deployment
+                    identifier: rolloutDeployment
+                    type: K8sRollingDeploy
+                    timeout: 10m
+                    spec:
+                      skipDryRun: false
+                - step:
+                    type: Verify
+                    name: Verify
+                    identifier: Verify
+                    timeout: 2h
+                    spec:
+                      type: Canary
+                      monitoredService:
+                        type: Template
+                        spec:
+                          monitoredServiceTemplateRef: GCP_Metric_Template
+                          versionLabel: version1
+                          templateInputs:
+                            type: Application
+                            sources:
+                              healthSources:
+                                - identifier: template_gcp_logs
+                                  type: StackdriverLog
+                                  spec:
+                                    connectorRef: <+input>
+                                    queries:
+                                      - name: GCO Logs Query
+                                        serviceInstanceIdentifier: <+input>
+                                        messageIdentifier: <+input>
+                      spec:
+                        sensitivity: HIGH
+                        duration: 5m
+                        deploymentTag: <+serviceConfig.artifacts.primary.tag>
+                    failureStrategies:
+                      - onFailure:
+                          errors:
+                            - Verification
+                          action:
+                            type: ManualIntervention
+                            spec:
+                              timeout: 2h
+                              onTimeout:
+                                action:
+                                  type: StageRollback
+                      - onFailure:
+                          errors:
+                            - Unknown
+                          action:
+                            type: ManualIntervention
+                            spec:
+                              timeout: 2h
+                              onTimeout:
+                                action:
+                                  type: Ignore
+              rollbackSteps:
+                - step:
+                    name: Rollback Rollout Deployment
+                    identifier: rollbackRolloutDeployment
+                    type: K8sRollingRollback
+                    timeout: 10m
+                    spec: {}
+          tags: {}
+          failureStrategies:
+            - onFailure:
+                errors:
+                  - AllErrors
+                action:
+                  type: StageRollback
