@@ -34,7 +34,7 @@ resource "harness_platform_slo" "slo" {
             type = "Threshold"
             spec = {
               metric1        = "prometheus_metric"
-              thresholdValue = 10
+              thresholdValue = 20
               thresholdType  = ">"
             }
           }
