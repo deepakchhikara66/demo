@@ -38,7 +38,7 @@ resource "harness_platform_slo" "slo" {
               thresholdType  = ">"
             }
           }
-          sliMissingDataType =  "Good"
+          sliMissingDataType = "Good"
         }
       ]
     })
