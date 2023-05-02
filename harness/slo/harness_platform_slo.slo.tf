@@ -42,9 +42,5 @@ resource "harness_platform_slo" "slo" {
         }
       ]
     })
-    notification_rule_refs {
-      notification_rule_ref = "notification_rule_ref"
-      enabled               = true
-    }
   }
 }
