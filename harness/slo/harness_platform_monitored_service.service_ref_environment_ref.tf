@@ -38,7 +38,7 @@ resource "harness_platform_monitored_service" "service_ref_environment_ref" {
       })
     }
     change_sources {
-      name = "csName1"
+      name = "csName2"
       identifier = "harness_cd_next_gen"
       type = "HarnessCDNextGen"
       enabled = true
