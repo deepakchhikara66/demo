@@ -16,7 +16,7 @@ resource "harness_platform_slo" "slo" {
       spec                  = jsonencode({
         type = "Monthly"
         spec = {
-          dayOfMonth = 5
+          dayOfMonth = 6
         }
       })
     }
