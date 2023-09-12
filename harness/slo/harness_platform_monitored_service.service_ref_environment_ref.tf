@@ -49,7 +49,6 @@ resource "harness_platform_monitored_service" "service_ref_environment_ref" {
 
     template_ref = "template_ref"
     version_label = "version_label"
-    enabled = true
   }
 }
 
