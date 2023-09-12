@@ -1,7 +1,4 @@
 resource "harness_platform_connector_prometheus" "connectorRef" {
-  depends_on = [
-    harness_platform_project.terraform_project
-  ]
   identifier  = "connectorRef"
   name        = "connectorRef"
   description = "prometheus"
