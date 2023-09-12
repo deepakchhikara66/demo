@@ -3,7 +3,7 @@ resource "harness_platform_slo" "slo" {
     harness_platform_monitored_service.service_ref_environment_ref,
   ]
   org_id     = "cvng"
-  project_id = harness_platform_project.terraform_project.id
+  project_id = "ecommerce"
   identifier = "slo"
   request {
     name              = "slo"
