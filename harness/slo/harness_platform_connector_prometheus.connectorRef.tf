@@ -6,7 +6,7 @@ resource "harness_platform_connector_prometheus" "connectorRef" {
   name        = "connectorRef"
   description = "prometheus"
   tags        = ["foo:bar"]
-  org_id = harness_platform_organization.terraform_org.id
+  org_id = "cvng"
   project_id = harness_platform_project.terraform_project.id
   delegate_selectors = ["chi-play-prod2-small"]
   url = "http://10.4.2.99:80/health-source/prometheus/"
