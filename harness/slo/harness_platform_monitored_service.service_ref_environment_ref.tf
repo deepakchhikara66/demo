@@ -3,7 +3,7 @@ resource "harness_platform_monitored_service" "service_ref_environment_ref" {
     harness_platform_connector_prometheus.connectorRef
   ]
 
-  org_id     = "terraform_org"
+  org_id     = "cvng"
   project_id = "terraform_project"
   identifier = "service_ref_environment_ref"
   request {
