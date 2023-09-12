@@ -4,7 +4,7 @@ resource "harness_platform_monitored_service" "service_ref_environment_ref" {
   ]
 
   org_id     = "cvng"
-  project_id = "terraform_project"
+  project_id = "ecommerce"
   identifier = "service_ref_environment_ref"
   request {
     name = "service_ref_environment_ref"
