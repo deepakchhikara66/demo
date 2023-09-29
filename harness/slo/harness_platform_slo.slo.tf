@@ -2,8 +2,8 @@ resource "harness_platform_slo" "slo" {
   depends_on = [
     harness_platform_monitored_service.service_ref_environment_ref,
   ]
-  org_id     = harness_platform_organization.terraform_org.id
-  project_id = harness_platform_project.terraform_project.id
+  org_id     = "cvng"
+  project_id = "ecommerce"
   identifier = "slo"
   request {
     name              = "slo"

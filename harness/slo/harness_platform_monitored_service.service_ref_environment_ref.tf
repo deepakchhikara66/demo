@@ -3,8 +3,8 @@ resource "harness_platform_monitored_service" "service_ref_environment_ref" {
     harness_platform_connector_prometheus.connectorRef
   ]
 
-  org_id     = "terraform_org"
-  project_id = "terraform_project"
+  org_id     = "cvng"
+  project_id = "ecommerce"
   identifier = "service_ref_environment_ref"
   request {
     name = "service_ref_environment_ref"
@@ -49,7 +49,6 @@ resource "harness_platform_monitored_service" "service_ref_environment_ref" {
 
     template_ref = "template_ref"
     version_label = "version_label"
-    enabled = true
   }
 }
 
