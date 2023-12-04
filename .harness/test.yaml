@@ -1,0 +1,45 @@
+pipeline:
+  name: test
+  identifier: test
+  projectIdentifier: test
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: ABC
+        identifier: ABC
+        description: ""
+        type: Deployment
+        spec:
+          serviceConfig:
+            serviceRef: <+input>
+            serviceDefinition:
+              spec: {}
+              type: Kubernetes
+          infrastructure:
+            environmentRef: <+input>
+            infrastructureDefinition:
+              type: KubernetesDirect
+              spec:
+                connectorRef: <+input>
+                namespace: <+input>
+                releaseName: release-<+INFRA_KEY_SHORT_ID>
+            allowSimultaneousDeployments: false
+          execution:
+            steps:
+              - step:
+                  type: K8sRollingDeploy
+                  name: K8sRollingDeploy_1
+                  identifier: K8sRollingDeploy_1
+                  spec:
+                    skipDryRun: false
+                    pruningEnabled: false
+                  timeout: 10m
+            rollbackSteps: []
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
