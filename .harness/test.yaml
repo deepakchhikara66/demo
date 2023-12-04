@@ -22,7 +22,7 @@ pipeline:
               type: KubernetesDirect
               spec:
                 connectorRef: <+input>
-                namespace: <+input>
+                namespace: abc
                 releaseName: release-<+INFRA_KEY_SHORT_ID>
             allowSimultaneousDeployments: false
           execution:
