@@ -1,0 +1,30 @@
+pipeline:
+  name: test
+  identifier: test
+  projectIdentifier: test
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Manager
+        identifier: Manager
+        description: ""
+        type: Approval
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    onDelegate: true
+                    source:
+                      type: Inline
+                      spec:
+                        script: echo 1
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
+        tags: {}
