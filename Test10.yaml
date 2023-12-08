@@ -1,0 +1,51 @@
+pipeline:
+  name: Test10
+  identifier: Test10
+  projectIdentifier: test
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: deploy
+        identifier: deploy
+        description: ""
+        type: Deployment
+        spec:
+          serviceConfig:
+            serviceRef: <+input>
+            serviceDefinition:
+              spec: {}
+              type: Kubernetes
+          infrastructure:
+            environmentRef: <+input>
+            infrastructureDefinition:
+              type: KubernetesDirect
+              spec:
+                connectorRef: <+input>
+                namespace: test
+                releaseName: release-<+INFRA_KEY_SHORT_ID>
+            allowSimultaneousDeployments: false
+          execution:
+            steps:
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    onDelegate: true
+                    source:
+                      type: Inline
+                      spec:
+                        script: echo 1
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
+            rollbackSteps: []
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
