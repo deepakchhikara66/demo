@@ -1,0 +1,17 @@
+template:
+  name: template1
+  identifier: template1
+  versionLabel: "1"
+  type: Step
+  projectIdentifier: test
+  orgIdentifier: default
+  tags: {}
+  spec:
+    timeout: 10m
+    type: ShellScriptProvision
+    spec:
+      source:
+        type: Inline
+        spec:
+          script: echo 1
+      environmentVariables: []
