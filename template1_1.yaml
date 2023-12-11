@@ -13,5 +13,5 @@ template:
       source:
         type: Inline
         spec:
-          script: echo 102
+          script: echo 104
       environmentVariables: []
