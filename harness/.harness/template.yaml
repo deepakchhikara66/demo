@@ -8,7 +8,7 @@ pipeline:
     - stage:
         name: SLO_AS_CODE
         identifier: SLO_AS_CODE
-        description: ""
+        description: "desc"
         type: Custom
         spec:
           execution:
