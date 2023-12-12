@@ -1,0 +1,29 @@
+pipeline:
+  name: test16
+  identifier: test16
+  projectIdentifier: ecommerce
+  orgIdentifier: Flipkart
+  tags: {}
+  stages:
+    - stage:
+        name: ABC
+        identifier: ABC
+        description: ""
+        type: FeatureFlag
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    onDelegate: true
+                    source:
+                      type: Inline
+                      spec:
+                        script: echo 1
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
