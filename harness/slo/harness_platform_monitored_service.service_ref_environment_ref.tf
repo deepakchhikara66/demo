@@ -13,30 +13,31 @@ resource "harness_platform_monitored_service" "service_ref_environment_ref" {
     service_ref = "service_ref"
     environment_ref = "environment_ref"
     tags = ["foo:bar", "bar:foo"]
-    health_sources {
-      name = "prometheus"
-      identifier = "prometheus"
-      type = "Prometheus"
-      spec = jsonencode({
-        connectorRef = "connectorRef"
-        feature = "feature"
-        metricDefinitions = [
-          {
-            identifier   = "prometheus_metric"
-            metricName = "Prometheus Metric"
-            riskProfile = {
-              category =  "Errors"
+     health_sources {
+        name       = "prometheus"
+        identifier = "prometheus"
+        type       = "Prometheus"
+        spec       = jsonencode({
+          connectorRef      = "connectorRef"
+          feature           = "feature"
+          metricDefinitions = [
+            {
+              identifier = "prometheus_metric"
+              metricName = "Prometheus Metric"
+              analysis   = {
+              }
+              riskProfile = {
+              }
+              sli = {
+                enabled = true
+              },
+              query         = "sum(abc{identifier=\"slo-ratiobased-unsuccessfulCalls-datapattern\"})",
+              groupName     = "t2",
+              isManualQuery = true
             }
-            sli =  {
-              enabled =  true
-            },
-            query = "sum(abc{identifier=\"slo-ratiobased-unsuccessfulCalls-datapattern\"})",
-            groupName = "t2",
-            isManualQuery = true
-          }
-        ]
-      })
-    }
+          ]
+        })
+      }
     change_sources {
       name = "csName2"
       identifier = "harness_cd_next_gen"
