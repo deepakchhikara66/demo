@@ -1,0 +1,27 @@
+inputSet:
+  name: inputset143
+  identifier: inputset143
+  orgIdentifier: default
+  projectIdentifier: test
+  pipeline:
+    identifier: test18
+    stages:
+      - stage:
+          identifier: deploy
+          type: Deployment
+          spec:
+            serviceConfig:
+              serviceRef: <+input>.executionInput()
+            infrastructure:
+              environmentRef: prod
+              infrastructureDefinition:
+                type: KubernetesDirect
+                spec:
+                  connectorRef: <+input>.executionInput()
+                  namespace: <+input>.executionInput()
+  provider:
+    type: Harness
+    title: Harness Code Repository
+    info: Store pipeline in Harness repository
+    icon: code
+    size: 22
