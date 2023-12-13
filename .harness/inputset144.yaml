@@ -12,7 +12,7 @@ inputSet:
           type: Deployment
           spec:
             serviceConfig:
-              serviceRef: <+input>.executionInput()
+              serviceRef: order
             infrastructure:
               environmentRef: <+input>.executionInput()
               infrastructureDefinition:
