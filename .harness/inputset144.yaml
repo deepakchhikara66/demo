@@ -1,5 +1,6 @@
 inputSet:
   name: inputset144
+  tags: {}
   identifier: inputset144
   orgIdentifier: default
   projectIdentifier: test
@@ -13,7 +14,7 @@ inputSet:
             serviceConfig:
               serviceRef: <+input>.executionInput()
             infrastructure:
-              environmentRef: prod
+              environmentRef: <+input>.executionInput()
               infrastructureDefinition:
                 type: KubernetesDirect
                 spec:
