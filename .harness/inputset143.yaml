@@ -1,5 +1,6 @@
 inputSet:
   name: inputset143
+  tags: {}
   identifier: inputset143
   orgIdentifier: default
   projectIdentifier: test
@@ -11,7 +12,7 @@ inputSet:
           type: Deployment
           spec:
             serviceConfig:
-              serviceRef: <+input>.executionInput()
+              serviceRef: order
             infrastructure:
               environmentRef: prod
               infrastructureDefinition:
