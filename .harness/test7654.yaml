@@ -1,0 +1,17 @@
+inputSet:
+  name: test7654
+  identifier: test7654
+  orgIdentifier: default
+  projectIdentifier: test
+  pipeline:
+    identifier: test12345
+    variables:
+      - name: test
+        type: String
+        value: <+org.parentUniqueId>
+  provider:
+    type: Harness
+    title: Harness Code Repository
+    info: Store pipeline in Harness repository
+    icon: code
+    size: 22
