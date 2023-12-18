@@ -1,0 +1,6 @@
+pipeline:
+  name: test karan
+  identifier: test_karan
+  projectIdentifier: SRM_QA_Sign_Off_Automation
+  orgIdentifier: cvng
+  tags: {}
