@@ -9,7 +9,7 @@ inputSet:
     variables:
       - name: test
         type: String
-        value: <+org.identifier>
+        value: <+org.uniqueId>
   provider:
     type: Harness
     title: Harness Code Repository
