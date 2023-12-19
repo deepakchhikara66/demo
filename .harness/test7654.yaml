@@ -1,5 +1,6 @@
 inputSet:
   name: test7654
+  tags: {}
   identifier: test7654
   orgIdentifier: default
   projectIdentifier: test
@@ -8,7 +9,7 @@ inputSet:
     variables:
       - name: test
         type: String
-        value: <+org.parentUniqueId>
+        value: <+org.identifier>
   provider:
     type: Harness
     title: Harness Code Repository
