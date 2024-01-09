@@ -1,0 +1,7 @@
+environment:
+  name: payment-env
+  identifier: paymentenv
+  accountId: kmpySmUISimoRrJL6NL73w
+  orgIdentifier: default
+  projectIdentifier: test
+  type: Production
