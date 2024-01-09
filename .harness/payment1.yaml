@@ -1,0 +1,5 @@
+service:
+  name: payment1
+  identifier: payment1
+  orgIdentifier: default
+  projectIdentifier: test
