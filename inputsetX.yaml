@@ -1,0 +1,11 @@
+inputSet:
+  name: inputsetX
+  identifier: inputsetX
+  orgIdentifier: default
+  projectIdentifier: test
+  pipeline:
+    identifier: test
+    variables:
+      - name: pipeline
+        type: String
+        value: abc
