@@ -1,0 +1,14 @@
+template:
+  name: MS_Github
+  identifier: MS_Github
+  versionLabel: "1"
+  type: MonitoredService
+  projectIdentifier: SRM_QA_Sign_Off_Automation
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: <+input>
+    type: Application
+    sources:
+      healthSources: []
