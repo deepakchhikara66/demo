@@ -1,0 +1,14 @@
+template:
+  name: MS_remote_2
+  identifier: MS_remote_2
+  versionLabel: "1"
+  type: MonitoredService
+  projectIdentifier: SRM_QA_Sign_Off_Automation
+  orgIdentifier: cvng
+  tags: {}
+  spec:
+    serviceRef: <+input>
+    environmentRef: <+input>
+    type: Application
+    sources:
+      healthSources: []
